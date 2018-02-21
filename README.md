@@ -1,4 +1,4 @@
-![Alt text](feed_parser.jpg?raw=true "Title")
+![Alt text](cucc.jpg?raw=true "Title")
 # Scheduling Project
 Automates assigning hours for employees of an organization
 
