@@ -21,7 +21,10 @@ This will give you client_secret.json. Additionally, you will need an access to 
 
 ## Running the tests
 
-No tests for the current version
+Visit the google spreadsheet linked below and make a clone to your drive:
+(https://docs.google.com/spreadsheets/d/1SLmWO_gVHn2exKVuvUmP02TD7X45aiuUwoqYQtZuHs4/edit?usp=sharing)
+
+Must be named 'cucc schedule'
 
 ## Algorithm
 Algorithm for stable marriage, hospital/resident problem. For more, see (https://en.wikipedia.org/wiki/Stable_marriage_problem)
