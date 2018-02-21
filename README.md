@@ -4,8 +4,8 @@ Automates assigning hours for employees of an organization
 
 ## Getting Started
 
-cucc.py: file includes the algorithm for matching hours with candidates
-spreadsheet.py: helper file for accessing Google spreadsheet
+cucc: file includes the algorithm for matching hours with candidates
+spreadsheet: helper file for accessing Google spreadsheet
 
 ### Prerequisites
 
