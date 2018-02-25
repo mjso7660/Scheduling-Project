@@ -52,10 +52,10 @@ class Hour:
             dropped_worker.taken[self] = False
             dropped_worker.work_hour -= 1
             self.workers = self.workers[:-1]
-            if candidate != dropped_worker:
-                print(candidate.name, "picked up", self.name, "/", dropped_worker.name, "dropped")
+#            if candidate != dropped_worker:
+#                print(candidate.name, "picked up", self.name, "/", dropped_worker.name, "dropped")
             return candidate != dropped_worker
-        print(candidate.name, "picked up", self.name)
+#        print(candidate.name, "picked up", self.name)
         return True
             
     def _add_candidate(self, candidate):
@@ -124,27 +124,25 @@ class match:
             count = self.count
             self._assign()
             round += 1
-            print("test:", count, self.count)
+#            print("test:", count, self.count)
             if count == self.count:
-                return
-#                cnt += 1
-#                if cnt > 10:
-#                    return
+                cnt += 1
+                if cnt > 10:
+                    return
     
     def _assign(self):
         '''
         assigns each candidate's [preference] to [hours]
         return: None
         '''
-        students = self.students        
-        for student in students:
-            print("------",student.name,"------")
-            for hour in student.preferences:
-                print("------", hour.name,"------")
+        for hour in hours:
+#            print("------",hour.name,"------")
+            for student in hour.preferences:
+#                print("------", student.name,"------")
                 if not student.taken[hour]:
-                    print("*",hour.name,"preference: ")
+#                    print("*",hour.name,"preference: ")
                     hour.preferences = self._calculate_preference(hour)
-#                    print(self._slot_left(hour),self._student_with_same_point(hour, student))
+                    #if # of tied candidates smaller than available slots
                     if hour.slot >= self._student_with_same_point(hour, student):
                         if hour.try_matching(student):
                             student.taken[hour] = True
@@ -184,8 +182,8 @@ class match:
         for student in hour.preferences:
             preference_list.append((student, student.points))
         preference_list.sort(key=takeSecond, reverse=True)
-        for x in preference_list:
-            print(x[0].name,x[1])
+#        for x in preference_list:
+#            print(x[0].name,x[1])
         return [i[0] for i in preference_list]
 
     def _calculate_preference(self, hour):
@@ -201,7 +199,7 @@ class match:
         
     def _calculate_hours_taken(self, student):
         ''' returns points based on how many hours the student has taken'''
-        return 20 - student.work_hour
+        return 30 - student.work_hour**2
     
     def _calculate_consecutive(self, student, hour):
         ''' returns points based on consecutive hours'''
@@ -209,11 +207,11 @@ class match:
         n_th = 1
         hours = self.hours
         while hours.index(hour) - n_th >= 0 and student in hours[hours.index(hour)-n_th].workers:
-            point += 30
+            point += 6 - n_th
             n_th += 1
         n_th = 1
         while hours.index(hour) + n_th < len(hours) and student in hours[hours.index(hour)+n_th].workers:
-            point += 30
+            point += 6 - n_th
             n_th += 1
         return point
 
@@ -222,42 +220,6 @@ def takeSecond(elem):
     return elem[1]
 
 if __name__ == '__main__':
-#    h0 = Hour('h0', 3)   
-#    h1 = Hour('h1', 3)
-#    h2 = Hour('h2', 4)   
-#    h3 = Hour('h3', 5)
-#    h4 = Hour('h4', 5)
-#    h5 = Hour('h5', 4)
-#    h6 = Hour('h6', 3)
-#    
-#    c0_pref = [h0,h1,h2,h3]
-#    c1_pref = [h0,h1,h4,h5]
-#    c2_pref = [h4,h5,h6]
-#    c3_pref = [h5,h6]
-#    c4_pref = [h0, h1, h2]
-#    c5_pref = [h1,h2,h3]
-#    c6_pref = [h1,h2,h3]
-#    c7_pref = [h1,h2,h3,h4]
-#    c8_pref = [h3,h4,h5,h6]
-#    c9_pref = [h2,h3]
-#    c10_pref = [h1,h2,h3]
-#    c11_pref = [h0,h1,h4,h5]
-#    
-#    c0 = Candidate('c0', c0_pref)    
-#    c1 = Candidate('c1', c1_pref)    
-#    c2 = Candidate('c2', c2_pref)    
-#    c3 = Candidate('c3', c3_pref)    
-#    c4 = Candidate('c4', c4_pref)    
-#    c5 = Candidate('c5', c5_pref) 
-#    c6 = Candidate('c6', c6_pref)
-#    c7 = Candidate('c7', c7_pref)
-#    c8 = Candidate('c8', c8_pref)
-#    c9 = Candidate('c9', c9_pref)
-#    c10 = Candidate('c10', c10_pref)
-#    c11 = Candidate('c11', c11_pref)
-    
-#    students = [c0, c1, c2, c3, c4, c5, c6, c7,c8,c9,c10,c11]
-#    hours = [h0,h1,h2,h3,h4,h5,h6]
     hours, hour_dict = spreadsheet.create_hours()
     students = spreadsheet.create_students(hour_dict)
     
@@ -267,27 +229,13 @@ if __name__ == '__main__':
     for y in hours:
         new_match.add_hour(y)
     new_match.assign_until()
-    
     spreadsheet.update_cells(students, hours)
     
-#    print("---h0 workers----")
-#    for x in h0.workers:
-#        print(x.name)
-#    print("---h1 workers----")
-#    for x in h1.workers:
-#        print(x.name)
-#    print("---h2 workers----")
-#    for x in h2.workers:
-#        print(x.name)
-#    print("---h3 workers----")
-#    for x in h3.workers:
-#        print(x.name)
-#    print("---h4 workers----")
-#    for x in h4.workers:
-#        print(x.name)
-#    print("---h5 workers----")
-#    for x in h5.workers:
-#        print(x.name)
-#    print("---h6 workers----")
-#    for x in h6.workers:
-#        print(x.name)
+#    #calculate how mnay hours each student work and standard deviation
+#    dev = 0
+#    total_hours = 30
+#    student_num = len(new_match.students)    
+#    for student in students:
+#        print(student.name,"works",student.work_hour,"hours")
+#        dev += ((total_hours/student_num) - student.work_hour)**2
+#    print("standard deviation:", dev)

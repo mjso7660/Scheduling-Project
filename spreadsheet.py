@@ -17,10 +17,10 @@ def create_hours():
     hours = []
     hour_dict = {}
     row = 11
-    while row < len(all_values) and all_values[row][0] != '':
-        new_hour = cucc.Hour(all_values[row][0],int(all_values[row][1]))
+    while row < len(all_values) and all_values[row][1] != '':
+        new_hour = cucc.Hour(all_values[row][2],int(all_values[row][1]))
         hours.append(new_hour)
-        hour_dict[all_values[row][0]] = new_hour
+        hour_dict[all_values[row][2]] = new_hour
         row += 1
     return hours, hour_dict
 
@@ -51,17 +51,5 @@ def update_cells(students, hours):
             except IndexError:
                 continue
         sheet.update_cells(cell_list)
-        
-#    # Select a range
-#    cell_list = worksheet.range('A1:C7')
-#    
-#    for cell in cell_list:
-#        cell.value = 'O_o'
-#    
-#    # Update in batch
-#    worksheet.update_cells(cell_list)
-
-#a = create_students(create_hours()[1])
-#a= sheet.range('A11:D11')
         
         
